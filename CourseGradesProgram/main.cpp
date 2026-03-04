@@ -30,6 +30,8 @@ int main()
 
     calcAverages(students, studentTotal, testTotal);
 
+    getLetterGrades(students, studentTotal);
+
     return 0;
 }
 
@@ -107,4 +109,39 @@ void calcAverages(Student* sArray, int studentCount, int testCount)
     }
 }
 
+/*
+    Summary: Gets the letter grades for every student in the Student array, according to their averages.
+    Parameters: sArray, the array of students with all their info, studentCount, the total number of all students.
+    Return: None.
+    Preconditions: Every student in sArray must have a real average grade already added. studentCount must be collected prior to calling.
+    Postconditions: Every student in sArray will have their letterGrade updated to a letter corresponding to their average range.
+*/
+void getLetterGrades(Student* sArray, int studentCount)
+{
+    for (int i = 0; i < studentCount; i++)
+    {
+        double average = sArray[i].averageScore;
+
+        if (average >= 90)
+        {
+            sArray[i].letterGrade = 'A';
+        }
+        else if (average >= 80)
+        {
+            sArray[i].letterGrade = 'B';
+        }
+        else if (average >= 70)
+        {
+            sArray[i].letterGrade = 'C';
+        }
+        else if (average >= 60)
+        {
+            sArray[i].letterGrade = 'D';
+        }
+        else
+        {
+            sArray[i].letterGrade = 'F';
+        }
+    }
+}
 
