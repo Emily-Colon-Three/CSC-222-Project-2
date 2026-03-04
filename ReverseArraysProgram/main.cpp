@@ -1,3 +1,7 @@
+/*
+    This program first creates an array of 10 prime numbers, its size defined as a constant. Then, the program uses pointers and a dynamic array to create a mirrored version of the original
+    array. After the arrays are properly set up, they are both printed to the terminal, first the original, then the reversed. Memory is deallocated before the program terminates.
+*/
 #include <iostream>
 
 const int ARRAY_SIZE = 10;
@@ -13,8 +17,13 @@ int main()
     // Main array of primes is populated
     int primes[ARRAY_SIZE] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
 
-    int* reversePrimes;
+    int* reversePrimes = ReverseArray(primes, ARRAY_SIZE);
 
+    print(primes, ARRAY_SIZE); // Prints original array
+
+    print(reversePrimes, ARRAY_SIZE); // Prints reversed array
+
+    delete[] reversePrimes; // Deallocates memory of reversed prime array (VERY IMPORTANT!!)
 
     return 0;
 }
