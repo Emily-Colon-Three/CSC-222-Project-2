@@ -17,9 +17,9 @@ struct Student {
 
 Student* getData(string fileName, int& students, int& tests);
 
-void calcAverages(Student* structArr, int studentCount, int testCount);
+void calcAverages(Student* sArray, int studentCount, int testCount);
 
-void getLetterGrades(Student* structArr, int studentCount);
+void getLetterGrades(Student* sArray, int studentCount);
 
 int main()
 {
@@ -28,9 +28,18 @@ int main()
 
     Student* students = getData("student_data.txt", studentTotal, testTotal);
 
+    calcAverages(students, studentTotal, testTotal);
+
     return 0;
 }
 
+/*
+    Summary: Gets data from a specified file, taking the number of students and tests from its header before reading the names, IDs, and test scores of each student.
+    Parameters: fileName, the string for the file's exact name, students, a reference to an integer keeping the total number of students, and tests, a reference to the total number of tests.
+    Return: A dynamic array of Student structs, of however many students there are.
+    Preconditions: fileName must not only refer to a text file that exists, but one that is formatted perfectly. Uses sstream.
+    Postconditions: Reads and parses through a text file. Allocates memory to the dynamic Student array and its inner dynamic test scores array. This memory must be freed later.
+*/
 Student* getData(string fileName, int& students, int& tests)
 {
     fstream dataFile(fileName);
@@ -70,7 +79,32 @@ Student* getData(string fileName, int& students, int& tests)
         exit(1);
     }
 
+    dataFile.close(); // closes file
     return studentArray;
+}
+
+/*
+    Summary: Goes through the struct array for students, calculating and updating their average score by averaging out the test scores of each student.
+    Parameters: sArray, the array of students, int studentCount, the number of total students, and testCount, the number of total tests.
+    Return: None.
+    Preconditions: sArray must be filled with valid data, studentCount and testCount should have values assigned already.
+    Postconditions: The average of each student will be changed as a result of calling this function.
+*/
+void calcAverages(Student* sArray, int studentCount, int testCount)
+{
+    for (int i = 0; i < studentCount; i++)
+    {
+        int total = 0;
+
+        for (int j = 0; j < testCount; j++)
+        {
+            total += sArray[i].testScores[j];
+        }
+
+        double average = float(total) / float(testCount); // Takes average
+
+        sArray[i].averageScore = average; // Stores average in struct
+    }
 }
 
 
