@@ -1,6 +1,11 @@
+/*
+    This program reads a file of student data, using its information to find the number of students and tests, filling an array of structs utilizing the added information. It gets the name, ID,
+    test scores, average scores, and letter grades of every student, before printing them out in a neatly formatted report.
+*/
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -21,6 +26,8 @@ void calcAverages(Student* sArray, int studentCount, int testCount);
 
 void getLetterGrades(Student* sArray, int studentCount);
 
+void printReport(Student* sArray, int studentCount);
+
 int main()
 {
     int studentTotal;
@@ -31,6 +38,12 @@ int main()
     calcAverages(students, studentTotal, testTotal);
 
     getLetterGrades(students, studentTotal);
+
+    printReport(students, studentTotal);
+
+    // Deallocates dynamic memory
+    delete[] students->testScores;
+    delete[] students;
 
     return 0;
 }
@@ -142,6 +155,24 @@ void getLetterGrades(Student* sArray, int studentCount)
         {
             sArray[i].letterGrade = 'F';
         }
+    }
+}
+
+/*
+    Summary: Prints out a report based on the student array, specifically their names, IDs, average scores, and letter grades.
+    Parameters: sArray is the student array, containing all of their information within each individual struct, int studentCount is the number of total students whose data is in sArray.
+    Return: None.
+    Preconditions: sArray must be COMPLETELY processed and filled with all important information, studentCount must be accurately recorded before calling.
+    Postconditions: cout and the terminal are used to print out a formatted report.
+*/
+void printReport(Student* sArray, int studentCount)
+{
+    // Print Column headers
+    cout << setw(15) << "Name:" << setw(10) << "ID:" << setw(10) << "Average:" << setw(15) << "Letter Grade:" << endl;
+
+    for (int i = 0; i < studentCount; i++)
+    {
+        cout << fixed << setprecision(1) << setw(15) << sArray[i].name << setw(10) << sArray[i].id << setw(10) << sArray[i].averageScore << setw(15) << sArray[i].letterGrade << endl;
     }
 }
 
